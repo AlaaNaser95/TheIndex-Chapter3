@@ -21,9 +21,14 @@ class App extends Component {
     this.filterAuthors = this.filterAuthors.bind(this);
   }
   filterAuthors(query) {
-    return authors.filter(
-      author => author.first_name === query || author.last_name === query
-    );
+    console.log("RUNNIN");
+    const newAuthors = authors.filter(author => {
+      return (
+        author.first_name.toLowerCase().includes(query.toLowerCase()) ||
+        author.last_name.toLowerCase().includes(query.toLowerCase())
+      );
+    });
+    this.setState({ authors: newAuthors });
   }
   selectAuthor(author) {
     this.setState({ currentAuthor: author });
@@ -41,6 +46,7 @@ class App extends Component {
           <AuthorsList
             authors={this.state.authors}
             selectAuthor={this.selectAuthor}
+            filterAuthors={this.filterAuthors}
           />
         );
       }
